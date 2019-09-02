@@ -1,0 +1,44 @@
+%%
+%% Copyright 2019 Ole Hexel
+%%
+%% This a language definition file for the ecv class.
+%% THe file defines some NLS strings.
+%%
+%% This file is free property; as a special exception the author
+%% gives unlimited permission to copy and/or distribute it, with
+%% or without modifications, as long as this notice is
+%% preserved.
+%%
+%% This file is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY, to the extent permitted by law;
+%% without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE.
+%%
+
+\def\fileversion{0.1}
+\def\filedate{2019/07/16}
+
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesFile{ecvFrench.ldf}[2019/07/16]
+
+\def\ecvNLS@Page{Page}
+\def\ecvNLS@Title{Curriculum Vitae}
+\def\ecvNLS@Person{Coordonn\'ees}
+\def\ecvNLS@Profession{Poste actuel}
+\def\ecvNLS@Education{\'Education}
+\def\ecvNLS@Research{Recherche}
+\def\ecvNLS@Awards{Distinctions}
+\def\ecvNLS@Publications{Publications}
+\def\ecvNLS@Scholarships{Bourses}
+\def\ecvNLS@Jobs{Exp\'eriences professionnelles}
+\def\ecvNLS@Languages{Langues}
+\def\ecvNLS@LanguageTravels{S\'ejours linguistiques}
+\def\ecvNLS@Abilities{Comp\'etences}
+\def\ecvNLS@Conferences{Conf\'erences}
+\def\ecvNLS@Speeches{Pr\'esentations}
+\def\ecvNLS@Trainig{Formation continue}
+\def\ecvNLS@Attachements{Pi\`eces jointes}
+\endinput
+%%
+%% End of file `ecvFrench.ldf'.
