@@ -986,7 +986,6 @@ column_type = {'id_candidature':'object',
                 'hobbie2':'object',
                 'hobbie3': 'object'}
 
-dt = pd.read_csv("../input/fill_cv.csv", delimiter = ";", encoding = "latin3", dtype = column_type, keep_default_na = False)
 
 if len(sys.argv[1:]) == 0:
     print 'Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]'
@@ -1032,6 +1031,9 @@ for opt, arg in opts:
 if not os.path.isdir(outputdir):
     os.mkdir(outputdir, 0755)
 
+dt = pd.read_csv(inputfile, delimiter = ";", encoding = "latin3", dtype = column_type, keep_default_na = False)
+
+print "Input file: ", inputfile
 print "Output directory: ", outputdir
 print "Layout: ", layout
 print "Font: ", font
