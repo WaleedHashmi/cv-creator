@@ -891,7 +891,7 @@ def write_deedy(font):
                             "&{}\\\\\n".format(hobbie2),
                             "&{}\\\\\n".format(hobbie3),
                             "\end{tabular}\n"]
-    with open('./{}/{}_deedy_{}.tex'.format(outputdir, font), "w") as f:
+    with open('./{}/{}_deedy_{}.tex'.format(outputdir, intitule_cv, font), "w") as f:
         f.writelines(lines_start_1)
         if font == 'tgheros' or font == 'tgadventor':
             f.writelines('\\renewcommand{\\familydefault}{\sfdefault}\n')
