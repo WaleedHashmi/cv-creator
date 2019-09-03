@@ -994,15 +994,21 @@ if len(sys.argv[1:]) == 0:
 font = ''
 layout = ''
 outputdir = './output'
+helpmessage = """Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]
+
+    -i, --inputfile     Name of inputfile. Must be cvs format.
+    -o, --outputdir     (Optional) Name of directory to which TeX files will be written. Will be created if inexistent.
+    -l, --layout        (Optional) Name of desired layout. Must be one of: banking, classic, ecv, oldstyle, professional, academic, cleancv, deedy. Leaving this blank results in random layout.
+    -f, --font          (Optional) Name of desired font. Must be one of: tgheros, tgbonum, tgtermes, tgadventor, lmodern, kpfonts. Leaving this blank results in default pairings. See README on Drive."""
     
 try:
     opts, args = getopt.getopt(sys.argv[1:],"hi:o:l:f:",["inputfile=","outputdir=","layout=","font="])
 except getopt.GetoptError:
-    print 'Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]'
+    print helpmessage
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
-        print 'Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]'
+        print helpmessage
         sys.exit()
     elif opt in ("-i", "--ifile"):
         inputfile = arg
