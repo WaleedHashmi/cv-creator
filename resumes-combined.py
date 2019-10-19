@@ -6,8 +6,8 @@ import sys, getopt, os.path
 import random
 
 # Define variables
-def read_data(data, row):
-    print "Row:", row
+def read_data(data, row, jobdata, blacklist):
+    print("Row:", row)
     global nom 
     nom = data['nom'][row]
     global prenom 
@@ -24,73 +24,77 @@ def read_data(data, row):
     intitule_exp = data['intitule_experiences'][row].encode('utf8')
     # 1er emploi
     global exp_title_1 
-    exp_title_1 = data['exp1_title'][row].encode('utf8')
     global exp_date_start_month_1 
-    exp_date_start_month_1 = data['exp1_date_start_month'][row]
     global exp_date_start_year_1 
-    exp_date_start_year_1 = data['exp1_date_start_year'][row]
-    # if(np.isnan(exp_date_start_year_1) | np.isnan(exp_date_start_year_1)): exp_date_start_year_1 = ""
     global exp_date_end_month_1 
-    exp_date_end_month_1 = data['exp1_date_end_month'][row]
-    # if(np.isnan(exp_date_end_month_1) | np.isnan(exp_date_end_month_1)): exp_date_end_month_1 = ""
     global exp_date_end_year_1 
-    exp_date_end_year_1 = data['exp1_date_end_year'][row]
-    # if(np.isnan(exp_date_end_year_1) | np.isnan(exp_date_end_year_1)): exp_date_end_year_1 = ""
     global exp_main_task_1_1 
-    exp_main_task_1_1 = data['exp1_main_task1'][row].encode('utf8')
     global exp_main_task_1_2 
-    exp_main_task_1_2 = data['exp1_main_task2'][row].encode('utf8')
     global exp_main_task_1_3 
-    exp_main_task_1_3 = data['exp1_main_task3'][row].encode('utf8')
     global exp_employeur_1 
-    exp_employeur_1 = data['exp1_employeur'][row].encode('utf8')
     global exp_adresse_1 
-    exp_adresse_1 = data['exp1_adresse'][row].encode('utf8')
+    newjob = return_job(data = jobdata, blacklist = blacklist)
+    blacklist.append(newjob[1])
+    newjob = newjob[0]
+    exp_title_1 = newjob['title'].encode('utf8')
+    exp_start = format_date(newjob['Start Date'])
+    exp_date_start_month_1 = exp_start[0]
+    exp_date_start_year_1 = exp_start[1]
+    exp_end = format_date(newjob['End Date'])
+    exp_date_end_month_1 = exp_end[0]
+    exp_date_end_year_1 = exp_end[1]
+    exp_main_task_1_1 = newjob['Description'].encode('utf8')
+    exp_main_task_1_2 = ''
+    exp_main_task_1_3 = ''
+    exp_employeur_1 = newjob['Employer'].encode('utf8')
+    exp_adresse_1 = newjob['Location'].encode('utf8')
     # 2e emploi
-    global exp_title_2 
-    exp_title_2 = data['exp2_title'][row].encode('utf8')
-    global exp_date_start_month_2 
-    exp_date_start_month_2 = data['exp2_date_start_month'][row]
-    global exp_date_start_year_2 
-    exp_date_start_year_2 = data['exp2_date_start_year'][row]
-    # if(np.isnan(exp_date_start_year_2) | np.isnan(exp_date_start_year_2)): exp_date_start_year_2 = ""
+    global exp_title_2
+    global exp_date_start_month_2
+    global exp_date_start_year_2
     global exp_date_end_month_2 
-    exp_date_end_month_2 = data['exp2_date_end_month'][row]
-    # if(np.isnan(exp_date_end_month_2) | np.isnan(exp_date_end_month_2)): exp_date_end_month_2 = ""
     global exp_date_end_year_2 
-    exp_date_end_year_2 = data['exp2_date_end_year'][row]
-    # if(np.isnan(exp_date_end_year_2) | np.isnan(exp_date_end_year_2)): exp_date_end_year_2 = ""
     global exp_main_task_2_1 
-    exp_main_task_2_1 = data['exp2_main_task1'][row].encode('utf8')
     global exp_main_task_2_2 
-    exp_main_task_2_2 = data['exp2_main_task2'][row].encode('utf8')
     global exp_main_task_2_3 
-    exp_main_task_2_3 = data['exp2_main_task3'][row].encode('utf8')
     global exp_employeur_2 
-    exp_employeur_2 = data['exp2_employeur'][row].encode('utf8')
     global exp_adresse_2 
-    exp_adresse_2 = data['exp2_adresse'][row].encode('utf8')
+    newjob = return_job(data = jobdata, blacklist = blacklist)
+    blacklist.append(newjob[1])
+    newjob = newjob[0]
+    exp_title_2 = newjob['title'].encode('utf8')
+    exp_start = format_date(newjob['Start Date'])
+    exp_date_start_month_2 = exp_start[0]
+    exp_date_start_year_2 = exp_start[1]
+    exp_end = format_date(newjob['End Date'])
+    exp_date_end_month_2 = exp_end[0]
+    exp_date_end_year_2 = exp_end[1]
+    exp_main_task_2_1 = newjob['Description'].encode('utf8')
+    exp_main_task_2_2 = ''
+    exp_main_task_2_3 = ''
+    exp_employeur_2 = newjob['Employer'].encode('utf8')
+    exp_adresse_2 = newjob['Location'].encode('utf8')
     # 3e emploi
-    global exp_title_3 
-    exp_title_3 = data['exp3'][row].encode('utf8')
-    global exp_date_start_month_3 
-    exp_date_start_month_3 = data['exp3_date_start_month'][row].encode('utf8')
-    global exp_date_start_year_3 
-    exp_date_start_year_3 = data['exp3_date_start_year'][row]
+    global exp_title_3
+    global exp_date_start_month_3
+    global exp_date_start_year_3
     global exp_date_end_month_3 
-    exp_date_end_month_3 = data['exp3_date_end_month'][row].encode('utf8')
     global exp_date_end_year_3 
-    exp_date_end_year_3 = data['exp3_date_end_year'][row]
     global exp_main_task_3_1 
-    exp_main_task_3_1 = data['exp3_main_task1'][row].encode('utf8')
     global exp_main_task_3_2 
-    exp_main_task_3_2 = data['exp3_main_task2'][row].encode('utf8')
     global exp_main_task_3_3 
-    exp_main_task_3_3 = data['exp3_main_task3'][row].encode('utf8')
     global exp_employeur_3 
-    exp_employeur_3 = data['lieu_exp3'][row].encode('utf8')
     global exp_adresse_3 
-    exp_adresse_3 = data['adr_exp3'][row].encode('utf8')
+    exp_title_3 = ''
+    exp_date_start_month_3 = ''
+    exp_date_start_year_3 = ''
+    exp_date_end_month_3 = ''
+    exp_date_end_year_3 = ''
+    exp_main_task_3_1 = ''
+    exp_main_task_3_2 = ''
+    exp_main_task_3_3 = ''
+    exp_employeur_3 = ''
+    exp_adresse_3 = ''
     # formations
     global intitule_formations 
     intitule_formations = data['intitule_formations'][row].encode('utf8')
@@ -146,6 +150,32 @@ def read_data(data, row):
     global hobbie3 
     hobbie3 = data['hobbie3'][row].encode('utf8')
 
+def return_job(data, blacklist):
+    f = False
+    while f == False: 
+        row = random.randint(min(data.index), max(data.index))
+        if row not in blacklist:
+            f = True
+    return [data.iloc[row,:], row]
+
+def format_date(date):
+    newdate = list()
+    if date == 999999:
+        pass
+    elif len(str(date)) == 6:
+        newmonth = str(date)[-2:]
+        newyear = str(date)[0:4]
+        newdate.append(newmonth)
+        newdate.append(newyear)
+    elif len(str(date)) == 4:
+        newmonth = ''
+        newyear = str(date)
+        newdate.append(newmonth)
+        newdate.append(newyear)
+    else:
+        print("Date missing in row ", row)
+        sys.exit(2)
+    return newdate
 
 # Define LaTeX file for ECV package and write it
 def write_ecv(font):
@@ -988,40 +1018,51 @@ column_type = {'id_candidature':'object',
 
 
 if len(sys.argv[1:]) == 0:
-    print 'Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]'
+    print('Usage: resumes-combined.py -i <inputfile> -j <job file> [-o <outputdirectory>] [-l <layout>] [-f <font>] [-h]')
     sys.exit(2)
 
+jobfile = 'input/vendeur.csv'
 font = ''
 layout = ''
 outputdir = './output'
-helpmessage = """Usage: resumes-combined.py -i <inputfile> [-o <outputdirectory>] [-l <layout>] [-f <font>]
+helpmessage = """Usage: resumes-combined.py -i <inputfile> -j <job title> [-o <outputdirectory>] [-l <layout>] [-f <font>] [-h]
 
-    -i, --inputfile     Name of inputfile. Must be cvs format.
+    -h, --help          Displays this help message.
+    -i, --inputfile     Name of inputfile. Must be in cvs format.
+    -j, --jobfile       Name of csv file with relevant job information.
     -o, --outputdir     (Optional) Name of directory to which TeX files will be written. Will be created if inexistent.
     -l, --layout        (Optional) Name of desired layout. Must be one of: banking, classic, ecv, oldstyle, professional, academic, cleancv, deedy. Leaving this blank results in random layout.
     -f, --font          (Optional) Name of desired font. Must be one of: tgheros, tgbonum, tgtermes, tgadventor, lmodern, kpfonts. Leaving this blank results in default pairings. See README on Drive."""
     
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hi:o:l:f:",["inputfile=","outputdir=","layout=","font="])
+    opts, args = getopt.getopt(sys.argv[1:],"hi:j:o:l:f:",["inputfile=","jobfile=","outputdir=","layout=","font="])
 except getopt.GetoptError:
-    print helpmessage
+    print(helpmessage)
     sys.exit(2)
 for opt, arg in opts:
-    if opt == '-h':
-        print helpmessage
+    if opt in ('-h', '--help'):
+        print(helpmessage)
         sys.exit()
-    elif opt in ("-i", "--ifile"):
+    elif opt in ("-i", "--inputfile"):
         inputfile = arg
         if not os.path.exists(inputfile):
             print("Input file does not exist.")
             sys.exit(2)
         if not inputfile[-3:] == "csv":
-            print("Input file must be csv.")
+            print("Input file must be in csv format.")
+            sys.exit(2)
+    elif opt in ('-j', '-jobfile'):
+        job = arg
+        if not os.path.exists(jobfile):
+            print("Job file does not exist.")
+            sys.exit(2)
+        if not jobfile[-3:] == 'csv':
+            print("Job file must be in csv format.")
             sys.exit(2)
     elif opt in ("-o", "--ofile"):
         outputdir = arg
         if not os.path.isdir(outputdir):
-            os.mkdir(outputdir, 0755)
+            os.mkdir(outputdir)
     elif opt in ("-f", "--font"):
         font = arg
         if font not in ("tgheros", "tgbonum", "tgtermes", "tgadventor", "lmodern", "kpfonts"):
@@ -1035,18 +1076,24 @@ for opt, arg in opts:
             sys.exit(2)
 
 if not os.path.isdir(outputdir):
-    os.mkdir(outputdir, 0755)
+    os.mkdir(outputdir)
 
+print("Input file: ", inputfile)
+print("Job file: ", jobfile)
+print("Output directory: ", outputdir)
+print("Layout: ", layout)
+print("Font: ", font)
+
+# Read profile file
 dt = pd.read_csv(inputfile, delimiter = ";", encoding = "latin3", dtype = column_type, keep_default_na = False)
-
-print "Input file: ", inputfile
-print "Output directory: ", outputdir
-print "Layout: ", layout
-print "Font: ", font
+# Read jobs file
+jdt = pd.read_csv(jobfile, delimiter = ",", encoding = "ISO-8859-2", keep_default_na = False)
+# Instantiate blacklist (i.e. rows of jobfile already used)
+blacklist = list()
 
 if font and layout:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i)
+        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         if layout == "banking":
             write_moderncv(layout  = "banking", font = font)
         elif layout == "classic":
@@ -1065,7 +1112,7 @@ if font and layout:
             write_deedy(font = font)
 elif layout:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i)
+        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         if layout == "banking":
             write_moderncv(layout  = "banking", font = "tgheros")
         elif layout == "classic":
@@ -1084,9 +1131,9 @@ elif layout:
             write_deedy(font = "lmodern")
 elif font:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i)
+        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         branch = random.randint(1,8)
-        print "Branch: ", branch
+        print("Branch: ", branch)
         if branch == 1:
             write_moderncv(layout  = "banking", font = font)
         elif branch == 2:
@@ -1105,9 +1152,9 @@ elif font:
             write_deedy(font = font)
 else:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i)
+        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         branch = random.randint(1,8)
-        print "Branch: ", branch
+        print("Branch: ", branch)
         if branch == 1:
             write_moderncv(layout  = "banking", font = "tgheros")
         elif branch == 2:
