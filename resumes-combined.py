@@ -289,9 +289,9 @@ def write_moderncv(layout, font):
     lines_2e_emploi = [
         "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}\\newline{{}}{}\\newline{{}}{}}}\n".format(
             exp_date_start_month_2,
-            int(exp_date_start_year_2),
+            int(exp_date_start_year_2) if exp_date_start_year_2 else Null
             exp_date_end_month_2,
-            int(exp_date_end_year_2),
+            int(exp_date_end_year_2) if exp_date_end_year_2 else Null
             exp_title_2,
             exp_employeur_2,
             exp_adresse_2,
