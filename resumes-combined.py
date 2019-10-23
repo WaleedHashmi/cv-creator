@@ -161,7 +161,7 @@ def return_job(data, blacklist):
 def format_date(date):
     newdate = list()
     if date == 999999:
-        pass
+        newdate.extend(['',''])
     elif len(str(date)) == 6:
         newmonth = str(date)[-2:]
         newyear = str(date)[0:4]
@@ -373,16 +373,16 @@ def write_moderncv(layout, font):
 # Define LaTeX file for cleancv package and write it
 def write_cleancv():
     lines_start_1 = ["\documentclass[a4paper,11pt]{article}\n",
-                    "\usepackage[T1]{fontenc}\n",
-                    "\usepackage[utf8]{inputenc}\n",
-                    #"\usepackage{lmodern}\n",
+                    "\\usepackage[T1]{fontenc}\n",
+                    "\\usepackage[utf8]{inputenc}\n",
+                    #"\\usepackage{lmodern}\n",
                     #"\\renewcommand{\\familydefault}{\sfdefault}\n",
                     "\\newlength{\outerbordwidth}\n",
                     "\pagestyle{empty}\n",
                     "\\raggedbottom\n",
-                    "\usepackage[svgnames]{xcolor}\n",
-                    "\usepackage{framed}\n",
-                    "\usepackage{tocloft}\n"
+                    "\\usepackage[svgnames]{xcolor}\n",
+                    "\\usepackage{framed}\n",
+                    "\\usepackage{tocloft}\n"
                     "\setlength{\outerbordwidth}{3pt}\n",
                     "\definecolor{shadecolor}{gray}{0.75}\n",
                     "\definecolor{shadecolorB}{gray}{0.93}\n",
@@ -485,12 +485,12 @@ def write_cleancv():
 # Define LaTeX file for CVUS package and write it
 def write_cvus():
     lines_start_1 = ["\documentclass[letterpaper]{article}\n",
-                    "\usepackage{hyperref}\n",
-                    "\usepackage{geometry}\n",
-                    "\usepackage[T1]{fontenc}\n",
-                    "\usepackage[utf8]{inputenc}\n",
-                    #"\usepackage[sc,osf]{mathpazo}\n",
-                    "\usepackage[sfdefault,book]{FiraSans}\n",
+                    "\\usepackage{hyperref}\n",
+                    "\\usepackage{geometry}\n",
+                    "\\usepackage[T1]{fontenc}\n",
+                    "\\usepackage[utf8]{inputenc}\n",
+                    #"\\usepackage[sc,osf]{mathpazo}\n",
+                    "\\usepackage[sfdefault,book]{FiraSans}\n",
                     "\\renewcommand{\\familydefault}{\sfdefault}\n",
                     "\def\\name{{{} {}}}\n".format(prenom, nom),
                     "\def\\footerlink{}\n",
@@ -499,7 +499,7 @@ def write_cvus():
                     "\pagestyle{myheadings}\n",
                     "\markright{\\name}\n",
                     "\\thispagestyle{empty}\n",
-                    "\usepackage{sectsty}\n",
+                    "\\usepackage{sectsty}\n",
                     "\sectionfont{\\rmfamily\mdseries\Large}\n",
                     "\subsectionfont{\\rmfamily\mdseries\itshape\large}\n",
                     "\setlength\parindent{0em}\n",
@@ -690,12 +690,12 @@ def write_simple():
 
 def write_academic(font):
     lines_start_1 = ["\documentclass[letterpaper,11pt,oneside]{article}\n",
-                    "\usepackage[utf8]{inputenc}\n",
-                    "\usepackage{setspace}\n",
-                    "\usepackage{hyperref}\n",
-                    "\usepackage[left=1in, right=1in, bottom=1.25in, top=1.25in]{geometry}\n",
+                    "\\usepackage[utf8]{inputenc}\n",
+                    "\\usepackage{setspace}\n",
+                    "\\usepackage{hyperref}\n",
+                    "\\usepackage[left=1in, right=1in, bottom=1.25in, top=1.25in]{geometry}\n",
                     "\pagenumbering{gobble}\n",
-                    "\usepackage{{{}}}\n".format(font)]
+                    "\\usepackage{{{}}}\n".format(font)]
     lines_start_2 = ["\\begin{document}\n",
                     "\\noindent  \LARGE{{\\textbf{{{} {}}}}}  \\\\ \n".format(prenom, nom),
                     "\\vspace{-2ex}\n",
@@ -780,16 +780,16 @@ def write_academic(font):
 
 def write_professional(font):
     lines_start_1 = ["\documentclass[a4paper,10pt]{article}\n",
-                    "\usepackage{marvosym}\n",
-                    "\usepackage[T1]{fontenc}\n",
-                    "\usepackage[utf8]{inputenc}\n",
-                    "\usepackage[french]{babel}\n",
-                    "\usepackage{fullpage}\n",
-                    "\usepackage{{{}}}\n".format(font),
+                    "\\usepackage{marvosym}\n",
+                    "\\usepackage[T1]{fontenc}\n",
+                    "\\usepackage[utf8]{inputenc}\n",
+                    "\\usepackage[french]{babel}\n",
+                    "\\usepackage{fullpage}\n",
+                    "\\usepackage{{{}}}\n".format(font),
                     "\RequirePackage{color,graphicx}\n",
-                    "\usepackage[usenames,dvipsnames]{xcolor}\n",
-                    "\usepackage{titlesec}\n",
-                    "\usepackage{hyperref}\n",
+                    "\\usepackage[usenames,dvipsnames]{xcolor}\n",
+                    "\\usepackage{titlesec}\n",
+                    "\\usepackage{hyperref}\n",
                     "\definecolor{linkcolour}{rgb}{0,0.2,0.6}\n",
                     "\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}\n",
                     "\\titleformat{\section}{\Large\scshape\\raggedright}{}{0em}{}[\\titlerule]\n",
@@ -878,8 +878,8 @@ def write_professional(font):
 
 def write_deedy(font):
     lines_start_1 = ["\documentclass[]{deedy-resume-openfont}\n",
-                    "\usepackage{{{}}}\n".format(font),
-                    "\usepackage[utf8]{inputenc}\n"]
+                    "\\usepackage{{{}}}\n".format(font),
+                    "\\usepackage[utf8]{inputenc}\n"]
     lines_start_2 = ["\\begin{document}\n",
                     "\\namesection{{{}}}{{{}}}{{{} | {}}}\n".format(nom, prenom, email, phone),
                     "\\begin{minipage}[t]{0.33\\textwidth}\n",]
@@ -1059,7 +1059,7 @@ for opt, arg in opts:
         if not jobfile[-3:] == 'csv':
             print("Job file must be in csv format.")
             sys.exit(2)
-    elif opt in ("-o", "--ofile"):
+    elif opt in ("-o", "--outputdir"):
         outputdir = arg
         if not os.path.isdir(outputdir):
             os.mkdir(outputdir)
