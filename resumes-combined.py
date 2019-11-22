@@ -6,14 +6,14 @@ import sys, getopt, os.path
 import random
 
 # Define variables
-def read_data(data, row, jobdata, blacklist):
+def read_csv(data, row, jobdata, blacklist):
     print("Row:", row)
     global nom 
     nom = data['nom'][row]
     global prenom 
     prenom = data['prenom'][row]
     global address
-    address = data['candidat_adr'][row]
+    address = data['candidat_adr'][row].encode('utf8')
     global phone
     phone = data['candidat_tel'][row]
     global email
@@ -29,8 +29,6 @@ def read_data(data, row, jobdata, blacklist):
     global exp_date_end_month_1 
     global exp_date_end_year_1 
     global exp_main_task_1_1 
-    global exp_main_task_1_2 
-    global exp_main_task_1_3 
     global exp_employeur_1 
     global exp_adresse_1 
     newjob = return_job(data = jobdata, blacklist = blacklist)
@@ -44,8 +42,6 @@ def read_data(data, row, jobdata, blacklist):
     exp_date_end_month_1 = exp_end[0]
     exp_date_end_year_1 = exp_end[1]
     exp_main_task_1_1 = newjob['Description'].encode('utf8')
-    exp_main_task_1_2 = ''
-    exp_main_task_1_3 = ''
     exp_employeur_1 = newjob['Employer'].encode('utf8')
     exp_adresse_1 = newjob['Location'].encode('utf8')
     # 2e emploi
@@ -55,8 +51,6 @@ def read_data(data, row, jobdata, blacklist):
     global exp_date_end_month_2 
     global exp_date_end_year_2 
     global exp_main_task_2_1 
-    global exp_main_task_2_2 
-    global exp_main_task_2_3 
     global exp_employeur_2 
     global exp_adresse_2 
     newjob = return_job(data = jobdata, blacklist = blacklist)
@@ -70,8 +64,6 @@ def read_data(data, row, jobdata, blacklist):
     exp_date_end_month_2 = exp_end[0]
     exp_date_end_year_2 = exp_end[1]
     exp_main_task_2_1 = newjob['Description'].encode('utf8')
-    exp_main_task_2_2 = ''
-    exp_main_task_2_3 = ''
     exp_employeur_2 = newjob['Employer'].encode('utf8')
     exp_adresse_2 = newjob['Location'].encode('utf8')
     # 3e emploi
@@ -81,8 +73,6 @@ def read_data(data, row, jobdata, blacklist):
     global exp_date_end_month_3 
     global exp_date_end_year_3 
     global exp_main_task_3_1 
-    global exp_main_task_3_2 
-    global exp_main_task_3_3 
     global exp_employeur_3 
     global exp_adresse_3 
     exp_title_3 = ''
@@ -91,8 +81,6 @@ def read_data(data, row, jobdata, blacklist):
     exp_date_end_month_3 = ''
     exp_date_end_year_3 = ''
     exp_main_task_3_1 = ''
-    exp_main_task_3_2 = ''
-    exp_main_task_3_3 = ''
     exp_employeur_3 = ''
     exp_adresse_3 = ''
     # formations
@@ -109,37 +97,6 @@ def read_data(data, row, jobdata, blacklist):
     formation_date_start_year_1 = data['formation1_date_start_year'][row]
     global formation_date_end_year_1 
     formation_date_end_year_1 = data['formation1_end_start_year'][row]
-    # 2e formation
-    global intitule_formation_2 
-    intitule_formation_2 = data['formation2'][row].encode('utf8')
-    global formation_lieu_2 
-    formation_lieu_2 = data['formation2_lieu'][row].encode('utf8')
-    global formation_adresse_2 
-    formation_adresse_2 = data['formation2_adr'][row].encode('utf8')
-    global formation_date_start_year_2 
-    formation_date_start_year_2 = data['formation2_date_start_year'][row]
-    global formation_date_end_year_2 
-    formation_date_end_year_2 = data['formation2_end_start_year'][row]
-    # 3e formation
-    global intitule_formation_3 
-    intitule_formation_3 = data['formation3'][row].encode('utf8')
-    global formation_lieu_3 
-    formation_lieu_3 = data['formation3_lieu'][row].encode('utf8')
-    global formation_adresse_3 
-    formation_adresse_3 = data['formation3_adr'][row].encode('utf8')
-    global formation_date_start_year_3 
-    formation_date_start_year_3 = data['formation3_date_start_year'][row]
-    global formation_date_end_year_3 
-    formation_date_end_year_3 = data['formation3_end_start_year'][row]
-    # Skills
-    global intitule_skills 
-    intitule_skills = data['intitule_skills'][row].encode('utf8')
-    global skill1 
-    skill1 = data['skill1'][row].encode('utf8')
-    global skill2 
-    skill2 = data['skill2'][row].encode('utf8')
-    global skill3 
-    skill3 = data['skill3'][row].encode('utf8')
     # Hobbies
     global intitule_hobbies 
     intitule_hobbies = data['intitule_hobbies'][row].encode('utf8')
@@ -197,34 +154,24 @@ def write_ecv(font):
                      '\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(exp_date_start_year_1, exp_date_end_year_1),
                      '\ecvENR{{Employeur}}{{\ecvBold{{{}}}, {}}}\n'.format(exp_employeur_1, exp_adresse_1),
                      '\ecvENR{{Position}}{{{}}}\n'.format(exp_title_1),
-                     '\ecvENR{{Responsabilit\\\'es}}{{{}, {}, {}}}\n'.format(exp_main_task_1_1, exp_main_task_1_2, exp_main_task_1_3)]
+                     '\ecvENR{{Responsabilit\\\'es}}{{{}}}\n'.format(exp_main_task_1_1)]
 
     lines_2e_emploi = ['\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(exp_date_start_year_2, exp_date_end_year_2),
                      '\ecvENR{{Employeur}}{{\ecvBold{{{}}}, {}}}\n'.format(exp_employeur_2, exp_adresse_2),
                      '\ecvENR{{Position}}{{{}}}\n'.format(exp_title_2),
-                     '\ecvENR{{Responsabilit\\\'es}}{{{}, {}, {}}}\n'.format(exp_main_task_2_1, exp_main_task_2_2, exp_main_task_2_3)]
+                     '\ecvENR{{Responsabilit\\\'es}}{{{}}}\n'.format(exp_main_task_2_1)]
 
     lines_3e_emploi = ['\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(exp_date_start_year_3, exp_date_end_year_3),
                      '\ecvENR{{Employeur}}{{\ecvBold{{{}}}, {}}}\n'.format(exp_employeur_3, exp_adresse_3),
                      '\ecvENR{{Position}}{{{}}}\n'.format(exp_title_3),
-                     '\ecvENR{{Responsabilit\\\'es}}{{{}, {}, {}}}\n'.format(exp_main_task_3_1, exp_main_task_3_2, exp_main_task_3_3)]
+                     '\ecvENR{{Responsabilit\\\'es}}{{{}}}\n'.format(exp_main_task_3_1)]
 
     lines_formation = ['\ecvBSec{{{}}}\n'.format(intitule_formations),
                        '\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(formation_date_start_year_1, formation_date_end_year_1),
                        '\ecvENR{{Dipl\^ome}}{{\ecvBold{{{}}}}}\n'.format(intitule_formation_1),
                        '\ecvENR{{\\\'Etablissement}}{{{}, {}}}\n'.format(formation_lieu_1, formation_adresse_1)]
 
-
-    lines_2e_formation = ['\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(formation_date_start_year_2, formation_date_end_year_2),
-                       '\ecvENR{{Dipl\^ome}}{{\ecvBold{{{}}}}}\n'.format(intitule_formation_2),
-                       '\ecvENR{{\\\'Etablissement}}{{{}, {}}}\n'.format(formation_lieu_2, formation_adresse_2)]
-
-    lines_3e_formation = ['\ecvEFR{{P\\\'eriode}}{{{} - {}}}\n'.format(formation_date_start_year_3, formation_date_end_year_3),
-                       '\ecvENR{{Dipl\^ome}}{{\ecvBold{{{}}}}}\n'.format(intitule_formation_3),
-                       '\ecvENR{{\\\'Etablissement}}{{{}, {}}}\n'.format(formation_lieu_3, formation_adresse_3)]
-
-    lines_skills_hobbies = ['\ecvBSec{{{}}}\n'.format(intitule_hobbies),
-                            '\ecvEBSub{{}}{{{}, {}, {}}}\n'.format(hobbie1, hobbie2, hobbie3)]
+    lines_hobbies = ['\ecvBSec{{{}}}\n'.format(intitule_hobbies), '\ecvEBSub{{}}{{{}, {}, {}}}\n'.format(hobbie1, hobbie2, hobbie3)]
 
     with open('{}/{}_ecv_{}.tex'.format(outputdir, intitule_cv, font), 'w') as f:
         f.writelines(lines_start_1)
@@ -240,15 +187,7 @@ def write_ecv(font):
         else:
             f.writelines(lines_3e_emploi)
         f.writelines(lines_formation)
-        if intitule_formation_2 == '':
-            pass
-        else:
-            f.writelines(lines_2e_formation)
-        if intitule_formation_3 == '':
-            pass
-        else:
-            f.writelines(lines_3e_formation)
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write('\end{ecv}\n')
         f.write('\end{document}')
 
@@ -274,7 +213,7 @@ def write_moderncv(layout, font):
                      "\setcounter{secnumdepth}{0}\n",
                      "\makecvtitle\n",
                      "\section{{{}}}\n".format(intitule_exp),
-                     "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}\\newline{{}}{}\\newline{{}}{}}}\n".format(
+                     "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}}}\n".format(
                          exp_date_start_month_1,
                          int(exp_date_start_year_1),
                          exp_date_end_month_1,
@@ -282,12 +221,10 @@ def write_moderncv(layout, font):
                          exp_title_1,
                          exp_employeur_1,
                          exp_adresse_1,
-                         exp_main_task_1_1,
-                         exp_main_task_1_2,
-                         exp_main_task_1_3)]
+                         exp_main_task_1_1)]
 
     lines_2e_emploi = [
-        "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}\\newline{{}}{}\\newline{{}}{}}}\n".format(
+        "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}}}\n".format(
             exp_date_start_month_2,
             int(exp_date_start_year_2) if exp_date_start_year_2 else None,
             exp_date_end_month_2,
@@ -295,12 +232,10 @@ def write_moderncv(layout, font):
             exp_title_2,
             exp_employeur_2,
             exp_adresse_2,
-            exp_main_task_2_1,
-            exp_main_task_2_2,
-            exp_main_task_2_3)]
+            exp_main_task_2_1)]
 
     lines_3e_emploi = [
-        "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}\\newline{{}}{}\\newline{{}}{}}}\n".format(
+        "\cventry{{{} {} - {} {}}}{{{}}}{{{}}}{{{}}}{{}}{{{}}}\n".format(
             exp_date_start_month_3,
             exp_date_start_year_3,
             exp_date_end_month_3,
@@ -308,9 +243,7 @@ def write_moderncv(layout, font):
             exp_title_3,
             exp_employeur_3,
             exp_adresse_3,
-            exp_main_task_3_1,
-            exp_main_task_3_2,
-            exp_main_task_3_3)]
+            exp_main_task_3_1)]
 
     lines_1ere_formation = ["\section{{{}}}\n".format(intitule_formations),
                        "\cventry{{{} - {}}}{{{}}}{{{}}}{{{}}}{{}}{{}}\n".format(
@@ -320,28 +253,10 @@ def write_moderncv(layout, font):
                            formation_lieu_1,
                            formation_adresse_1)]
 
-    lines_2e_formation = ["\cventry{{{} - {}}}{{{}}}{{{}}}{{{}}}{{}}{{}}\n".format(
-        formation_date_start_year_2,
-        formation_date_end_year_2,
-        intitule_formation_2,
-        formation_lieu_2,
-        formation_adresse_2)]
-
-    lines_3e_formation = ["\cventry{{{} - {}}}{{{}}}{{{}}}{{{}}}{{}}{{}}\n".format(
-        formation_date_start_year_3,
-        formation_date_end_year_3,
-        intitule_formation_3,
-        formation_lieu_3,
-        formation_adresse_3)]
-
-    lines_skills_hobbies = ["\section{{{}}}\n".format(intitule_skills),
-                            "\cvlistitem{{{}}}\n".format(skill1),
-                            "\cvlistitem{{{}}}\n".format(skill2),
-                            "\cvlistitem{{{}}}\n".format(skill3),
-                            "\section{{{}}}\n".format(intitule_hobbies),
-                            "\cvlistitem{{{}}}\n".format(hobbie1),
-                            "\cvlistitem{{{}}}\n".format(hobbie2),
-                            "\cvlistitem{{{}}}\n".format(hobbie3)]
+    lines_hobbies = ["\section{{{}}}\n".format(intitule_hobbies),
+                     "\cvlistitem{{{}}}\n".format(hobbie1),
+                     "\cvlistitem{{{}}}\n".format(hobbie2),
+                     "\cvlistitem{{{}}}\n".format(hobbie3)]
 
     with open('./{}/{}_{}_{}.tex'.format(outputdir, intitule_cv, layout, font),
               "w") as f:
@@ -358,15 +273,7 @@ def write_moderncv(layout, font):
         else:
             f.writelines(lines_3e_emploi)
         f.writelines(lines_1ere_formation)
-        if intitule_formation_2 == '':
-            pass
-        else:
-            f.writelines(lines_2e_formation)
-        if intitule_formation_3 == '':
-            pass
-        else:
-            f.writelines(lines_3e_formation)
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{document}")
 
 
@@ -422,33 +329,19 @@ def write_cleancv():
                         "\item \\ressubheading{{{}}}{{{} {} - {} {}}}{{{}}}{{{}}}\n".format(exp_title_1, exp_date_start_month_1, exp_date_start_year_1, exp_date_end_month_1, exp_date_end_year_1, exp_employeur_1, exp_adresse_1),
                         "\\begin{itemize}\n",
                         "\\resitem{{{}}}\n".format(exp_main_task_1_1),
-                        "\\resitem{{{}}}\n".format(exp_main_task_1_2),
-                        "\\resitem{{{}}}\n".format(exp_main_task_1_3),
                         "\end{itemize}\n"]
     lines_2e_emploi = [ "\item \\ressubheading{{{}}}{{{} {} - {} {}}}{{{}}}{{{}}}\n".format(exp_title_2, exp_date_start_month_2, exp_date_start_year_2, exp_date_end_month_2, exp_date_end_year_2, exp_employeur_2, exp_adresse_2),
                         "\\begin{itemize}\n",
                         "\\resitem{{{}}}\n".format(exp_main_task_2_1),
-                        "\\resitem{{{}}}\n".format(exp_main_task_2_2),
-                        "\\resitem{{{}}}\n".format(exp_main_task_2_3),
                         "\end{itemize}\n"]
     lines_3e_emploi = [ "\item \\ressubheading{{{}}}{{{} {} - {} {}}}{{{}}}{{{}}}\n".format(exp_title_3, exp_date_start_month_3, exp_date_start_year_3, exp_date_end_month_3, exp_date_end_year_3, exp_employeur_3, exp_adresse_3),
                         "\\begin{itemize}\n",
                         "\\resitem{{{}}}\n".format(exp_main_task_3_1),
-                        "\\resitem{{{}}}\n".format(exp_main_task_3_2),
-                        "\\resitem{{{}}}\n".format(exp_main_task_3_3),
                         "\end{itemize}\n"]
     lines_1ere_formation = ["\\resheading{{{}}}\n".format(intitule_formations),
                             "\\begin{itemize}\n",
                             "\item \\ressubheading{{{}}}{{{} - {}}}{{{}}}{{{}}}\n".format(intitule_formation_1, formation_date_start_year_1, formation_date_end_year_1, formation_lieu_1, formation_adresse_1)]
-    lines_2e_formation = ["\item \\ressubheading{{{}}}{{{} - {}}}{{{}}}{{{}}}\n".format(intitule_formation_2, formation_date_start_year_2, formation_date_end_year_2, formation_lieu_2, formation_adresse_2)]
-    lines_3e_formation = ["\item \\ressubheading{{{}}}{{{} - {}}}{{{}}}{{{}}}\n".format(intitule_formation_3, formation_date_start_year_3, formation_date_end_year_3, formation_lieu_3, formation_adresse_3)]
-    lines_skills_hobbies = ["\\resheading{{{}}}\n".format(intitule_skills),
-                            "\\begin{itemize}\n",
-                            "\\resitem{{{}}}\n".format(skill1),
-                            "\\resitem{{{}}}\n".format(skill2),
-                            "\\resitem{{{}}}\n".format(skill3),
-                            "\end{itemize}\n",
-                            "\\resheading{{{}}}\n".format(intitule_hobbies),
+    lines_hobbies = ["\\resheading{{{}}}\n".format(intitule_hobbies),
                             "\\begin{itemize}\n",
                             "\\resitem{{{}}}\n".format(hobbie1),
                             "\\resitem{{{}}}\n".format(hobbie2),
@@ -469,16 +362,8 @@ def write_cleancv():
             f.writelines(lines_3e_emploi)
         f.writelines("\end{itemize}\n")
         f.writelines(lines_1ere_formation)
-        if intitule_formation_2 == '':
-            pass
-        else:
-            f.writelines(lines_2e_formation)
-        if intitule_formation_3 == '':
-            pass
-        else:
-            f.writelines(lines_3e_formation)
         f.writelines("\end{itemize}\n")
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{document}")
 
 
@@ -521,33 +406,19 @@ def write_cvus():
                     "\item \\textbf{{{}}}\hfill {} {} - {} {}\\\\{}\hfill {}\n\n".format(exp_title_1, exp_date_start_month_1, exp_date_start_year_1, exp_date_end_month_1, exp_date_end_year_1, exp_employeur_1, exp_adresse_1),
                     "\\begin{itemize}\n",
                     "\item- {}\n".format(exp_main_task_1_1),
-                    "\item- {}\n".format(exp_main_task_1_2),
-                    "\item- {}\n".format(exp_main_task_1_3),
                     "\\end{itemize}\n"]
     lines_2e_emploi = ["\item \\textbf{{{}}}\hfill {} {} - {} {}\\\\{}\hfill {}\n\n".format(exp_title_2, exp_date_start_month_2, exp_date_start_year_2, exp_date_end_month_2, exp_date_end_year_2, exp_employeur_2, exp_adresse_2),
                     "\\begin{itemize}\n",
                     "\item- {}\n".format(exp_main_task_2_1),
-                    "\item- {}\n".format(exp_main_task_2_2),
-                    "\item- {}\n".format(exp_main_task_2_3),
                     "\\end{itemize}\n"]
     lines_3e_emploi = ["\item \\textbf{{{}}}\hfill {} {} - {} {}\\\\{}\hfill {}\n\n".format(exp_title_3, exp_date_start_month_3, exp_date_start_year_3, exp_date_end_month_3, exp_date_end_year_3, exp_employeur_3, exp_adresse_3),
                     "\\begin{itemize}\n",
                     "\item- {}\n".format(exp_main_task_3_1),
-                    "\item- {}\n".format(exp_main_task_3_2),
-                    "\item- {}\n".format(exp_main_task_3_3),
                     "\\end{itemize}\n"]
     lines_formation = ["\section*{{{}}}\n".format(intitule_formations),
                         "\\begin{itemize}\n",
                         "\item \\textbf{{{}}} \hfill {} - {}\\\\{} \hfill {}\n".format(intitule_formation_1, formation_date_start_year_1, formation_date_end_year_1, formation_lieu_1, formation_adresse_1)]
-    lines_2e_formation = ["\item \\textbf{{{}}} \hfill {} - {}\\\\{} \hfill {}\n".format(intitule_formation_2, formation_date_start_year_2, formation_date_end_year_2, formation_lieu_2, formation_adresse_2)]
-    lines_3e_formation = ["\item \\textbf{{{}}} \hfill {} - {}\\\\{} \hfill {}\n".format(intitule_formation_3, formation_date_start_year_3, formation_date_end_year_3, formation_lieu_3, formation_adresse_3)]
-    lines_skills_hobbies = ["\section*{{{}}}\n".format(intitule_skills),
-                            "\\begin{itemize}\n",
-                            "\item {}\n".format(skill1),
-                            "\item {}\n".format(skill2),
-                            "\item {}\n".format(skill3),
-                            "\end{itemize}\n",
-                            "\section*{{{}}}\n".format(intitule_hobbies),
+    lines_hobbies = ["\section*{{{}}}\n".format(intitule_hobbies),
                             "\\begin{itemize}\n",
                             "\item {}\n".format(hobbie1),
                             "\item {}\n".format(hobbie2),
@@ -567,16 +438,8 @@ def write_cvus():
             f.writelines(lines_3e_emploi)
         f.writelines("\\end{itemize}\n")
         f.writelines(lines_formation)
-        if intitule_formation_2 == '':
-            pass
-        else:
-            f.writelines(lines_2e_formation)
-        if intitule_formation_3 == '':
-            pass
-        else:
-            f.writelines(lines_3e_formation)
         f.writelines("\\end{itemize}\n")
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{document}")
 
 
@@ -633,24 +496,7 @@ def write_simple():
                         "\hfill\DatestampY{{{}}} - \DatestampY{{{}}}\n".format(formation_date_start_year_1, formation_date_end_year_1),
                         "\Gap\n",
                         "{}, {}\n".format(formation_lieu_1, formation_adresse_1)]
-    lines_2e_formation = ["\Entry\\textbf{{{}}}".format(intitule_formation_2),
-                        "\hfill\DatestampY{{{}}} - \DatestampY{{{}}}\n".format(formation_date_start_year_2, formation_date_end_year_2),
-                        "\Gap\n",
-                        "{}, {}\n".format(formation_lieu_1, formation_adresse_2)]
-    lines_3e_formation = ["\Entry\\textbf{{{}}}".format(intitule_formation_3),
-                        "\hfill\DatestampY{{{}}} - \DatestampY{{{}}}\n".format(formation_date_start_year_3, formation_date_end_year_3),
-                        "\Gap\n",
-                        "{}, {}\n".format(formation_lieu_1, formation_adresse_3)]
-    lines_skills_hobbies = ["\Section{{{}}}{{{}}}{{}}\n".format(intitule_skills, intitule_skills),
-                            "\Gap\n",
-                            "\BulletItem\n",
-                            "{}\n".format(skill1),
-                            "\BulletItem\n",
-                            "{}\n".format(skill2),
-                            "\BulletItem\n",
-                            "{}\n".format(skill3),
-                            "\BigGap\n",
-                            "\Section{{{}}}{{{}}}{{}}\n".format(intitule_hobbies, intitule_hobbies),
+    lines_hobbies = ["\Section{{{}}}{{{}}}{{}}\n".format(intitule_hobbies, intitule_hobbies),
                             "\Gap\n",
                             "\BulletItem\n",
                             "{}\n".format(hobbie1),
@@ -674,17 +520,7 @@ def write_simple():
             f.writelines("\BigGap\n")
             f.writelines(lines_3e_emploi)
         f.writelines(lines_formation)
-        if intitule_formation_2 == '':
-            pass
-        else:
-            f.writelines("\BigGap\n")
-            f.writelines(lines_2e_formation)
-        if intitule_formation_3 == '':
-            pass
-        else:
-            f.writelines("\BigGap\n")
-            f.writelines(lines_3e_formation)
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{Body}\n")
         f.write("\end{document}")
 
@@ -713,34 +549,23 @@ def write_academic(font):
                         "&{}\\\\\n".format(exp_employeur_1),
                         "&{}\\\\\n".format(exp_adresse_1),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_1_1, exp_main_task_1_2, exp_main_task_1_3)]
+                        "&{}\\\\\n".format(exp_main_task_1_1)]
     lines_2e_emploi = ["{} {} - {} {}&\\textbf{{{}}}\\\\\n".format(exp_date_start_month_2, exp_date_start_year_2, exp_date_end_month_2, exp_date_end_year_2, exp_title_2),
                         "&{}\\\\\n".format(exp_employeur_2),
                         "&{}\\\\\n".format(exp_adresse_2),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_2_1, exp_main_task_2_2, exp_main_task_2_3)]
+                        "&{}\\\\\n".format(exp_main_task_2_1)]
     lines_3e_emploi = ["{} {} - {} {}&\\textbf{{{}}}\\\\\n".format(exp_date_start_month_3, exp_date_start_year_3, exp_date_end_month_3, exp_date_end_year_3, exp_title_3),
                         "&{}\\\\\n".format(exp_employeur_3),
                         "&{}\\\\\n".format(exp_adresse_3),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_3_1, exp_main_task_3_2, exp_main_task_3_3)]
+                        "&{}\\\\\n".format(exp_main_task_3_1)]
     lines_1ere_formation = ["\\Large{{{}}}&\\\\\n".format(intitule_formations),
                             "&\\\\\n",
                             "{} - {}&\\textbf{{{}}}\\\\\n".format(formation_date_start_year_1, formation_date_end_year_1, intitule_formation_1),
                             "&{}\\\\\n".format(formation_lieu_1),
                             "&{}\\\\\n".format(formation_adresse_1)]
-    lines_2e_formation = ["{} - {}&\\textbf{{{}}}\\\\\n".format(formation_date_start_year_2, formation_date_end_year_2, intitule_formation_2),
-                            "&{}\\\\\n".format(formation_lieu_2),
-                            "&{}\\\\\n".format(formation_adresse_2)]
-    lines_3e_formation = ["{} - {}&\\textbf{{{}}}\\\\\n".format(formation_date_start_year_3, formation_date_end_year_3, intitule_formation_3),
-                            "&{}\\\\\n".format(formation_lieu_3),
-                            "&{}\\\\\n".format(formation_adresse_3)]
-    lines_skills_hobbies = ["\\Large{{{}}}&\\\\\n".format(intitule_skills),
-                            "&{}\\\\\n".format(skill1),
-                            "&{}\\\\\n".format(skill2),
-                            "&{}\\\\\n".format(skill3),
-                            "&\\\\\n",
-                            "\\Large{{{}}}&\\\\\n".format(intitule_hobbies),
+    lines_hobbies = ["\\Large{{{}}}&\\\\\n".format(intitule_hobbies),
                             "&{}\\\\\n".format(hobbie1),
                             "&{}\\\\\n".format(hobbie2),
                             "&{}\\\\\n".format(hobbie3)]
@@ -763,18 +588,8 @@ def write_academic(font):
             f.writelines(lines_3e_emploi)
         f.writelines("&\\\\\n")
         f.writelines(lines_1ere_formation)
-        if not intitule_formation_2:
-            pass
-        else:
-            f.writelines("&\\\\\n")
-            f.writelines(lines_2e_formation)
-        if not intitule_formation_3:
-            pass
-        else:
-            f.writelines("&\\\\\n")
-            f.writelines(lines_3e_formation)
         f.writelines("&\\\\\n")
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{tabular}\n")
         f.write("\end{document}")
 
@@ -810,35 +625,25 @@ def write_professional(font):
                         "&\\textsc{{{}}}\\\\\n".format(exp_employeur_1),
                         "&\small{{{}}}\\\\\n".format(exp_adresse_1),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_1_1, exp_main_task_1_2, exp_main_task_1_3)]
+                        "&{}\\\\\n".format(exp_main_task_1_1)]
                         #"\multicolumn{2}{c}{}\\\\\n"]
     lines_2e_emploi = ["\\textsc{{{} {} - {} {}}}&{}\\\\\n".format(exp_date_start_month_2, exp_date_start_year_2, exp_date_end_month_2, exp_date_end_year_2, exp_title_2),
                         "&\\textsc{{{}}}\\\\\n".format(exp_employeur_2),
                         "&\small{{{}}}\\\\\n".format(exp_adresse_2),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_2_1, exp_main_task_2_2, exp_main_task_2_3)]
+                        "&{}\\\\\n".format(exp_main_task_2_1)]
                         #"\multicolumn{2}{c}{}\\\\\n"]
     lines_3e_emploi = ["\\textsc{{{} {} - {} {}}}&{}\\\\\n".format(exp_date_start_month_3, exp_date_start_year_3, exp_date_end_month_3, exp_date_end_year_3, exp_title_3),
                         "&\\textsc{{{}}}\\\\\n".format(exp_employeur_3),
                         "&\small{{{}}}\\\\\n".format(exp_adresse_3),
                         "&\\\\\n",
-                        "&{}, {}, {}\\\\\n".format(exp_main_task_3_1, exp_main_task_3_2, exp_main_task_3_3)]
+                        "&{}\\\\\n".format(exp_main_task_3_1)]
                         #"\multicolumn{2}{c}{}\\\\\n"]
     lines_1ere_formation = ["\section{{{}}}\n".format(intitule_formations),
                             "\\begin{tabular}{rl}\n",
                             "{} - {}&{}\\\\\n".format(formation_date_start_year_1, formation_date_end_year_1, intitule_formation_1),
                             "&{}, {}\\\\\n".format(formation_lieu_1, formation_adresse_1)]
-    lines_2e_formation = ["{} - {}&{}\\\\\n".format(formation_date_start_year_2, formation_date_end_year_2, intitule_formation_2),
-                          "&{}, {}\\\\\n".format(formation_lieu_2, formation_adresse_2)]
-    lines_3e_formation = ["{} - {}&{}\\\\\n".format(formation_date_start_year_3, formation_date_end_year_3, intitule_formation_3),
-                          "&{}, {}\\\\\n".format(formation_lieu_3, formation_adresse_3)]
-    lines_skills_hobbies = ["\section{{{}}}".format(intitule_skills),
-                            "\\begin{tabular}{rl}\n",
-                            "&{}\\\\\n".format(skill1),
-                            "&{}\\\\\n".format(skill2),
-                            "&{}\\\\\n".format(skill3),
-                            "\end{tabular}\n",
-                            "\section{{{}}}".format(intitule_hobbies),
+    lines_hobbies = ["\section{{{}}}".format(intitule_hobbies),
                             "\\begin{tabular}{rl}\n",
                             "&{}\\\\\n".format(hobbie1),
                             "&{}\\\\\n".format(hobbie2),
@@ -862,18 +667,8 @@ def write_professional(font):
             f.writelines(lines_3e_emploi)
         f.writelines("\end{tabular}\n")
         f.writelines(lines_1ere_formation)
-        if not intitule_formation_2:
-            pass
-        else:
-            f.writelines("\multicolumn{2}{c}{}\\\\\n")
-            f.writelines(lines_2e_formation)
-        if not intitule_formation_3:
-            pass
-        else:
-            f.writelines("\multicolumn{2}{c}{}\\\\\n")
-            f.writelines(lines_3e_formation)
         f.writelines("\end{tabular}\n")
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.write("\end{document}")
 
 def write_deedy(font):
@@ -888,14 +683,6 @@ def write_deedy(font):
                             "\descript{{{}}}\n".format(formation_date_start_year_1, formation_date_end_year_1),
                             "\location{{{}, {}}}\n".format(formation_lieu_1, formation_adresse_1),
                             "\sectionsep\n"]
-    lines_2e_formation = [ "\subsection{{{}}}\n".format(intitule_formation_2),
-                            "\descript{{{}}}\n".format(formation_date_start_year_2, formation_date_end_year_2),
-                            "\location{{{}, {}}}\n".format(formation_lieu_2, formation_adresse_2),
-                            "\sectionsep\n"]
-    lines_3e_formation = [ "\subsection{{{}}}\n".format(intitule_formation_3),
-                            "\descript{{{}}}\n".format(formation_date_start_year_3, formation_date_end_year_3),
-                            "\location{{{}, {}}}\n".format(formation_lieu_3, formation_adresse_3),
-                            "\sectionsep\n"]
     lines_1er_emploi = ["\section{{{}}}\n".format(intitule_exp),
                         "\\runsubsection{{{}}}\n".format(exp_title_1),
                         "\descript{{{} {} - {} {}}}\n".format(exp_date_start_month_1, exp_date_start_year_1, exp_date_end_month_1, exp_date_end_year_1),
@@ -909,13 +696,7 @@ def write_deedy(font):
                         "\descript{{{} {} - {} {}}}\n".format(exp_date_start_month_3, exp_date_start_year_3, exp_date_end_month_3, exp_date_end_year_3),
                         "\location{{{}, {}}}\n".format(exp_employeur_3, exp_adresse_3),
                         "\sectionsep\n"]
-    lines_skills_hobbies = ["\section{{{}}}\n".format(intitule_skills),
-                            "\\begin{tabular}{rl}\n",
-                            "&{}\\\\\n".format(skill1),
-                            "&{}\\\\\n".format(skill2),
-                            "&{}\\\\\n".format(skill3),
-                            "\end{tabular}\n",
-                            "\section{{{}}}\n".format(intitule_hobbies),
+    lines_hobbies = ["\section{{{}}}\n".format(intitule_hobbies),
                             "\\begin{tabular}{rl}\n",
                             "&{}\\\\\n".format(hobbie1),
                             "&{}\\\\\n".format(hobbie2),
@@ -927,14 +708,6 @@ def write_deedy(font):
             f.writelines('\\renewcommand{\\familydefault}{\sfdefault}\n')
         f.writelines(lines_start_2)
         f.writelines(lines_1ere_formation)
-        if not intitule_formation_2:
-            pass
-        else:
-            f.writelines(lines_2e_formation)
-        if not intitule_formation_3:
-            pass
-        else:
-            f.writelines(lines_3e_formation)
         f.writelines("\end{minipage}\n")
         f.writelines("\hfill\n")
         f.writelines("\\begin{minipage}[t]{0.66\\textwidth}\n")
@@ -947,76 +720,11 @@ def write_deedy(font):
             pass
         else:
             f.writelines(lines_3e_emploi)
-        f.writelines(lines_skills_hobbies)
+        f.writelines(lines_hobbies)
         f.writelines("\end{minipage}\n")
         f.write("\end{document}")
-# Read data
-column_type = {'id_candidature':'object',
-                'random':'int',
-                'intitule_cv':'object',
-                'phrase_pres':'object',
-                'nom':'object',
-                'prenom':'object',
-                'candidat_adr':'object',
-                'candidat_mail':'object',
-                'candidat_tel':'object',
-                'intitule_experiences':'object',
-                'exp1_title':'object',
-                'exp1_date_start_month':'object',
-                'exp1_date_start_year':'object',
-                'exp1_date_end_month':'object',
-                'exp1_date_end_year':'object',
-                'exp1_main_task1':'object',
-                'exp1_main_task2':'object',
-                'exp1_main_task3':'object',
-                'exp1_employeur':'object',
-                'exp1_adresse':'object',
-                'exp2_title':'object',
-                'exp2_date_start_month':'object',
-                'exp2_date_start_year':'object',
-                'exp2_date_end_month':'object',
-                'exp2_date_end_year': 'object',
-                'exp2_main_task1':'object',
-                'exp2_main_task2':'object',
-                'exp2_main_task3':'object',
-                'exp2_employeur':'object',
-                'exp2_adresse':'object',
-                'exp3':'object',
-                'exp3_date_start_month':'object',
-                'exp3_date_start_year':'object',
-                'exp3_date_end_month':'object',
-                'exp3_date_end_year':'object',
-                'exp3_main_task1':'object',
-                'exp3_main_task2':'object',
-                'exp3_main_task3':'object',
-                'lieu_exp3':'object',
-                'adr_exp3':'object',
-                'intitule_formations':'object',
-                'formation1':'object',
-                'formation1_lieu':'object',
-                'formation1_adr':'object',
-                'formation1_date_start_year':'object',
-                'formation1_end_start_year':'object',
-                'formation2':'object',
-                'formation2_lieu':'object',
-                'formation2_adr':'object',
-                'formation2_date_start_year':'object',
-                'formation2_end_start_year':'object',
-                'formation3':'object',
-                'formation3_lieu':'object',
-                'formation3_adr':'object',
-                'formation3_date_start_year':'object',
-                'formation3_end_start_year':'object',
-                'intitule_skills':'object',
-                'skill1':'object',
-                'skill2':'object',
-                'skill3':'object',
-                'intitule_hobbies':'object',
-                'hobbie1':'object',
-                'hobbie2':'object',
-                'hobbie3': 'object'}
 
-
+# Main part
 if len(sys.argv[1:]) == 0:
     print('Usage: resumes-combined.py -i <inputfile> -j <job file> [-o <outputdirectory>] [-l <layout>] [-f <font>] [-h]')
     sys.exit(2)
@@ -1028,8 +736,8 @@ outputdir = './output'
 helpmessage = """Usage: resumes-combined.py -i <inputfile> -j <job title> [-o <outputdirectory>] [-l <layout>] [-f <font>] [-h]
 
     -h, --help          Displays this help message.
-    -i, --inputfile     Name of inputfile. Must be in cvs format.
-    -j, --jobfile       Name of csv file with relevant job information.
+    -i, --inputfile     Name of inputfile. Must be in cvs format. Mandatory.
+    -j, --jobfile       Name of file with relevant job information. Must be in csv format. Mandatory.
     -o, --outputdir     (Optional) Name of directory to which TeX files will be written. Will be created if inexistent.
     -l, --layout        (Optional) Name of desired layout. Must be one of: banking, classic, ecv, oldstyle, professional, academic, cleancv, deedy. Leaving this blank results in random layout.
     -f, --font          (Optional) Name of desired font. Must be one of: tgheros, tgbonum, tgtermes, tgadventor, lmodern, kpfonts. Leaving this blank results in default pairings. See README on Drive."""
@@ -1085,15 +793,15 @@ print("Layout: ", layout)
 print("Font: ", font)
 
 # Read profile file
-dt = pd.read_csv(inputfile, delimiter = ";", encoding = "latin3", dtype = column_type, keep_default_na = False)
+dt = pd.read_csv(inputfile, delimiter = ",", encoding = "utf8", keep_default_na = False)
 # Read jobs file
-jdt = pd.read_csv(jobfile, delimiter = ",", encoding = "ISO-8859-2", keep_default_na = False)
+jdt = pd.read_csv(jobfile, delimiter = ",", encoding = "utf8", keep_default_na = False)
 # Instantiate blacklist (i.e. rows of jobfile already used)
 blacklist = list()
 
 if font and layout:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
+        read_csv(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         if layout == "banking":
             write_moderncv(layout  = "banking", font = font)
         elif layout == "classic":
@@ -1112,7 +820,7 @@ if font and layout:
             write_deedy(font = font)
 elif layout:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
+        read_csv(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         if layout == "banking":
             write_moderncv(layout  = "banking", font = "tgheros")
         elif layout == "classic":
@@ -1131,7 +839,7 @@ elif layout:
             write_deedy(font = "lmodern")
 elif font:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
+        read_csv(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         branch = random.randint(1,8)
         print("Branch: ", branch)
         if branch == 1:
@@ -1152,7 +860,7 @@ elif font:
             write_deedy(font = font)
 else:
     for i in range(0, len(dt.index)):
-        read_data(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
+        read_csv(data = dt, row = i, jobdata = jdt, blacklist = blacklist)
         branch = random.randint(1,8)
         print("Branch: ", branch)
         if branch == 1:
