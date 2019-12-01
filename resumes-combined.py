@@ -793,9 +793,9 @@ print("Layout: ", layout)
 print("Font: ", font)
 
 # Read profile file
-dt = pd.read_csv(inputfile, delimiter = ",", encoding = "utf8", keep_default_na = False)
+dt = pd.read_csv(inputfile, delimiter = ",", encoding = "ISO-8859-1", keep_default_na = False)
 # Read jobs file
-jdt = pd.read_csv(jobfile, delimiter = ",", encoding = "utf8", keep_default_na = False)
+jdt = pd.read_csv(jobfile, delimiter = ",", encoding = "ISO-8859-1", keep_default_na = False)
 # Instantiate blacklist (i.e. rows of jobfile already used)
 blacklist = list()
 
